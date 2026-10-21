@@ -1,0 +1,188 @@
+:root {
+  --ink: #17233b;
+  --ink-soft: #4b566b;
+  --paper: #f3f5ef;
+  --surface: #ffffff;
+  --line: #d7ddd4;
+  --accent: #f25c2a;
+  --accent-soft: #fde7dd;
+  --green: #2e6b57;
+  --radius: 8px;
+
+  --van-primary-color: var(--accent);
+  --van-tabbar-item-active-color: var(--ink);
+  --van-tabbar-background: rgba(255, 255, 255, 0.97);
+  --van-nav-bar-icon-color: var(--ink);
+  --van-nav-bar-text-color: var(--ink);
+  --van-cell-group-inset-radius: 8px;
+  --van-button-primary-background: var(--accent);
+  --van-button-primary-border-color: var(--accent);
+
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--paper);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #e7e9e2;
+}
+
+body,
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+}
+
+.app-shell {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  background: var(--paper);
+  overflow-x: hidden;
+}
+
+@media (min-width: 560px) {
+  .app-shell {
+    box-shadow: 0 0 0 1px rgba(23, 35, 59, 0.08), 0 24px 60px rgba(23, 35, 59, 0.12);
+  }
+}
+
+/* 固定栏在桌面端也要跟着 480px 的壳走 */
+.van-tabbar--fixed,
+.van-action-bar {
+  left: 50% !important;
+  right: auto !important;
+  width: 100% !important;
+  max-width: 480px;
+  transform: translateX(-50%);
+}
+
+.van-tabbar {
+  border-top: 1px solid var(--line);
+}
+
+.van-tabbar-item--active {
+  font-weight: 600;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 20px 16px 88px;
+}
+
+.display {
+  font-family: Georgia, 'Songti SC', 'STSong', SimSun, serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* 分类封面色 */
+.cover--digital {
+  background: #dbe6ef;
+}
+
+.cover--book {
+  background: #e8e2cd;
+}
+
+.cover--life {
+  background: #e0ead9;
+}
+
+.cover--sport {
+  background: #f4dfd4;
+}
+
+.cover--other {
+  background: #e6e1ee;
+}
+
+/* 价签：这个项目唯一的“花活”，其余保持安静 */
+.price-tag {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px 4px 20px;
+  border-radius: 2px 6px 6px 2px;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'Bahnschrift', 'DIN Alternate', 'Arial Narrow', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.price-tag::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 7px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--paper);
+  transform: translateY(-50%);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.16s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: none;
+  }
+}
+
+/* 键盘可达性：Vant 默认焦点样式偏弱，这里统一补上 */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
