@@ -29,17 +29,20 @@ export const useItemsStore = defineStore('items', {
   },
 
   actions: {
-    async load() {
-      if (this.loaded || this.loading) return
+    async load(){
+      if(this.loaded || this.loading) return
       this.loading = true
-      try {
-        const remote = await fetchItems()
-        const mine = this.items.filter((item) => item.owner === 'me')
-        this.items = [...mine, ...remote]
-        this.loaded = true
-      } finally {
+      try{
+        await this.reload()
+      }finally{
         this.loading = false
       }
+    },
+    async reload(){
+      const remote = await fetchItems()
+      const mine = this.items.filter((item) => item.owner === 'me')
+      this.items = [...mine,...remote]
+      this.loaded = true
     },
 
     add(input: NewItem) {
