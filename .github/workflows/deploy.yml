@@ -33,7 +33,10 @@ jobs:
       # 复制一份 index.html 当兜底，直接刷新 /item/xxx 这类地址才不会白屏。
       - run: cp dist/index.html dist/404.html
 
+      # 如果仓库还没启用 Pages，这一步会自动启用（Source = GitHub Actions）
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
