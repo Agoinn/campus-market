@@ -1,7 +1,8 @@
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
-import Vant from 'vant'
-import 'vant/lib/index.css'
+
+// showToast 是函数调用，不是模板标签，插件扫不到，样式要手动引一次
+import 'vant/es/toast/style'
 
 import App from './App.vue'
 import router from './router'
@@ -11,6 +12,5 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
-app.use(Vant)
 
 app.mount('#app')
