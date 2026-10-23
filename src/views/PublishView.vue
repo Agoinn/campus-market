@@ -5,6 +5,8 @@ import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 import { useItemsStore } from '@/stores/items'
 import { categoryCover } from '@/utils/category'
+import type { UploaderFileListItem } from 'vant'
+import { compressImage } from '@/utils/image'
 const title = ref('')
 const price = ref('')
 const seller = ref('')
@@ -14,6 +16,7 @@ const category = ref<Category | ''>('')
 const description = ref('')
 const router = useRouter()
 const itemsStore = useItemsStore()
+const fileList = ref<UploaderFileListItem[]>([])
 function onSubmit(){
   if(!title.value.trim()) return showToast('给商品起个标题')
   if(!Number.isFinite(Number(price.value)) || Number(price.value) <= 0)
@@ -23,6 +26,7 @@ function onSubmit(){
   if(!description.value.trim()) return showToast('写两句描述,卖得更快')
   if(!seller.value.trim()) return showToast('留个称呼,方便同学联系')
 
+  const image = fileList.value[0]?.content
   const item = itemsStore.add({
     title:title.value.trim(),
     price:Number(price.value),
@@ -32,10 +36,19 @@ function onSubmit(){
     seller: seller.value.trim(),
     campus: campus.value.trim() || '山西工程技术学院',
     cover: categoryCover[cat],
+    image,
   })
 
   showToast('发布成功')
   router.replace(`/item/${item.id}`)
+}
+async function onAfterRead(item:UploaderFileListItem | UploaderFileListItem[]) {
+  const file = Array.isArray(item) ? item[0] : item
+  if(!file?.content) return
+  const before = file.file?.size ?? 0
+  const compressed = await compressImage(file.content)
+  file.content = compressed  //把原图替换成压过的
+  showToast(`压缩:${Math.round(before / 1024)}KB → ${Math.round((compressed.length * 3) / 4 / 1024)}KB`)
 }
 </script>
 
@@ -90,6 +103,10 @@ function onSubmit(){
 
       placeholder="成色、入手时间、有没有磕碰,写清楚更容易成交"
       />
+    <section class="form-section">
+      <h2 class="display">图片</h2>
+      <van-uploader v-model="fileList" :max-count="1" :after-read="onAfterRead" />
+    </section>
     <div class="form-submit">
       <van-button block type="primary" @click="onSubmit">发布</van-button>
       <p>发布会保存在手机,刷新页面也不会丢失。</p>
@@ -116,6 +133,7 @@ function onSubmit(){
 }
 .form-section{
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 .form-section h2{
   margin-bottom: 10px;

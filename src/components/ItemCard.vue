@@ -33,7 +33,8 @@ function open() {
     @keydown.enter="open"
   >
     <div class="item-card__cover" :class="`cover--${categorySlug[item.category]}`">
-      <span class="item-card__emoji" aria-hidden="true">{{ item.cover }}</span>
+      <img v-if="item.image" :src="item.image" alt="" class="item-card__image" />
+      <span v-else class="item-card__emoji" aria-hidden="true">{{ item.cover }}</span>
       <button
         class="item-card__fav"
         :class="{ 'is-fav': isFavorite }"
@@ -186,5 +187,11 @@ function open() {
 .item-card__time {
   color: var(--ink-soft);
   font-size: 11px;
+}
+.item-card__image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 </style>

@@ -28,7 +28,8 @@ function goBack(){
     <van-nav-bar title="商品详情" left-arrow @click-left="goBack"></van-nav-bar>
     <template v-if="item">
       <div class="detail__cover" :class="`cover--${categorySlug[item.category]}`">
-        <span aria-hidden="true">{{ item.cover }}</span>
+        <img v-if="item.image" :src="item.image" alt="" />
+        <span v-else aria-hidden="true">{{ item.cover }}</span>
       </div>
       <section class="detail__main">
         <div class="detail__priece-row">
@@ -145,5 +146,11 @@ function goBack(){
   }
   .detail :deep(.van-action-bar-button){
     border-radius: 4px;
+  }
+  .detail__cover img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 </style>

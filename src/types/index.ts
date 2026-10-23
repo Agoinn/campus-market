@@ -14,6 +14,7 @@ export interface Item {
   seller: string
   campus: string
   cover: string
+  image?: string
   createdAt: number
   owner: 'seed' | 'me'
 }
