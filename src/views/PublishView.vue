@@ -45,10 +45,8 @@ function onSubmit(){
 async function onAfterRead(item:UploaderFileListItem | UploaderFileListItem[]) {
   const file = Array.isArray(item) ? item[0] : item
   if(!file?.content) return
-  const before = file.file?.size ?? 0
   const compressed = await compressImage(file.content)
   file.content = compressed  //把原图替换成压过的
-  showToast(`压缩:${Math.round(before / 1024)}KB → ${Math.round((compressed.length * 3) / 4 / 1024)}KB`)
 }
 </script>
 
